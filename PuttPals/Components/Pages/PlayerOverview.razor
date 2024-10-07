@@ -1,0 +1,20 @@
+﻿@page "/playeroverview"
+@attribute [StreamRendering(true)]
+
+<h1>Player Overview</h1>
+
+@if (Players == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var player in Players)
+        {
+            <div class="col-6 col-lg-4 colcol-xl-3 col-xxl-3">
+                <PlayerCard Player="player"></PlayerCard>
+            </div>
+        }
+    </div>
+}

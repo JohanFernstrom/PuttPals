@@ -1,0 +1,88 @@
+﻿@page "/playerdetail/{UserName}"
+
+<section class="employee-detail">
+    <h1 class="page-title">
+        Details for @Player.FirstName @Player.LastName
+    </h1>
+    <br />
+    <div class="col-12 row">
+        <div class="col-2 text-center">
+            <img src="@(Player.ProfilePictureUrl)" class="img-fluid rounded-circle employee-detail-img" />
+        </div>
+        <div class="col-10 row">
+            <div class="col-12 col-xxl-8">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Username</label>
+                    <div class="col-sm-8">
+                        <label type="text" class="form-control-plaintext">@Player.Username</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">First name</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.FirstName</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Last name</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.LastName</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phonenumber</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.PhoneNumber?</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.Email</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Number of Discs</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.Discs.Count</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Number of Bags</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.Bags.Count</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Active Player</label>
+                    <div class="col-sm-8">
+
+                        @if (Player.IsActive)
+                        {
+                            <label type="text" readonly class="form-control-plaintext">Yes</label>
+                        }
+                        else
+                        {
+                            <label type="text" readonly class="form-control-plaintext">No</label>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Joined us</label>
+                    <div class="col-sm-8">
+                        <label type="text" readonly class="form-control-plaintext">@Player.DateJoined.ToShortDateString()</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
