@@ -1,0 +1,31 @@
+﻿@page "/discdetail/{Identifier:int}"
+@rendermode InteractiveServer
+
+@inherits DiscDetailBase
+
+<div class="container mt-4">
+    <button class="btn btn-secondary mb-3" @onclick="GoBack">Back</button>
+    @if (disc != null)
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <img src="@disc.ImageUrl" class="img-fluid" alt="@disc.Name" />
+            </div>
+            <div class="col-md-8">
+                <h2>@disc.Name</h2>
+                <p><strong>Type:</strong> @disc.Type</p>
+                <p><strong>Weight:</strong> @disc.Weight grams</p>
+                <p><strong>Plastic:</strong> @disc.Plastic</p>
+                <p><strong>Speed:</strong> @disc.Speed</p>
+                <p><strong>Glide:</strong> @disc.Glide</p>
+                <p><strong>Turn:</strong> @disc.Turn</p>
+                <p><strong>Fade:</strong> @disc.Fade</p>
+                <p><strong>Count:</strong> @discCount</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
+</div>

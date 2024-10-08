@@ -28,7 +28,7 @@
             <hr />
             <ValidationSummary class="text-danger" role="alert" />
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.UserName" class="form-control" autocomplete="username" aria-required="true" placeholder="discmaster3000" />
+                <InputText @bind-Value="Input.UserName" class="form-control" autocomplete="new-username" aria-required="true" placeholder="discmaster3000" />
                 <label for="username">Username</label>
                 <ValidationMessage For="() => Input.UserName" class="text-danger" />
             </div>
@@ -72,6 +72,22 @@
 
     public async Task RegisterUser(EditContext editContext)
     {
+        // Check if a user with the same username already exists
+        var existingUserByUsername = await UserManager.FindByNameAsync(Input.UserName);
+        if (existingUserByUsername != null)
+        {
+            identityErrors = new List<IdentityError> { new IdentityError { Description = "Username is already taken." } };
+            return;
+        }
+
+        // Check if a user with the same email already exists
+        var existingUserByEmail = await UserManager.FindByEmailAsync(Input.Email);
+        if (existingUserByEmail != null)
+        {
+            identityErrors = new List<IdentityError> { new IdentityError { Description = "Email is already taken." } };
+            return;
+        }
+
         var user = CreateUser();
 
         await UserStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);

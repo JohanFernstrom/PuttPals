@@ -8,6 +8,7 @@
 <p role="status">Current count: @currentCount</p>
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+<button class="btn btn-primary mb-3" @onclick="OpenAddDiscModal2">Add Disc</button>
 
 @code {
     private int currentCount = 0;
@@ -15,5 +16,10 @@
     private void IncrementCount()
     {
         currentCount++;
+    }
+
+    private async void OpenAddDiscModal2()
+    {
+        Console.WriteLine("OpenAddDiscModal called"); // Debugging statement
     }
 }

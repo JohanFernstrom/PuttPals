@@ -48,7 +48,7 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Number of Discs</label>
                     <div class="col-sm-8">
-                        <label type="text" readonly class="form-control-plaintext">@Player.Discs.Count</label>
+                        <label type="text" readonly class="form-control-plaintext">@Player.PlayerDiscs.Count</label>
                     </div>
                 </div>
 
@@ -62,7 +62,6 @@
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Active Player</label>
                     <div class="col-sm-8">
-
                         @if (Player.IsActive)
                         {
                             <label type="text" readonly class="form-control-plaintext">Yes</label>
@@ -83,6 +82,4 @@
             </div>
         </div>
     </div>
-
-
 </section>

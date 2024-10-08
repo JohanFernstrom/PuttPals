@@ -3,11 +3,14 @@
 @using System.ComponentModel.DataAnnotations
 @using Microsoft.AspNetCore.Identity
 @using PuttPals.Data
+@using Microsoft.EntityFrameworkCore
+@using PuttPals.Data.Models
 
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 @inject IdentityUserAccessor UserAccessor
 @inject IdentityRedirectManager RedirectManager
+@inject ApplicationDbContext _context
 
 <PageTitle>Profile</PageTitle>
 
@@ -27,6 +30,51 @@
                 <InputText @bind-Value="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
                 <label for="phone-number" class="form-label">Phone number</label>
                 <ValidationMessage For="() => Input.PhoneNumber" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.FirstName" class="form-control" placeholder="Please enter your firstname." />
+                <label for="firstname" class="form-label">Firstname</label>
+                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.LastName" class="form-control" placeholder="Please enter your lastname" />
+                <label for="lastname" class="form-label">Lastname</label>
+                <ValidationMessage For="() => Input.LastName" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.ProfilePictureUrl" class="form-control" placeholder="Please enter your profile picture URL." />
+                <label for="profile-picture-url" class="form-label">Profile Picture URL</label>
+                <ValidationMessage For="() => Input.ProfilePictureUrl" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputCheckbox @bind-Value="Input.IsActive" class="form-check-input" />
+                <label for="is-active" class="form-label">Is Active</label>
+                <ValidationMessage For="() => Input.IsActive" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputNumber @bind-Value="Input.Aces" class="form-control" placeholder="Please enter your aces." disabled />
+                <label for="aces" class="form-label">Aces</label>
+                <ValidationMessage For="() => Input.Aces" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputNumber @bind-Value="Input.Eagles" class="form-control" placeholder="Please enter your eagles." disabled />
+                <label for="eagles" class="form-label">Eagles</label>
+                <ValidationMessage For="() => Input.Eagles" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputNumber @bind-Value="Input.Birdies" class="form-control" placeholder="Please enter your birdies." disabled />
+                <label for="birdies" class="form-label">Birdies</label>
+                <ValidationMessage For="() => Input.Birdies" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputNumber @bind-Value="Input.Pars" class="form-control" placeholder="Please enter your pars." disabled />
+                <label for="pars" class="form-label">Pars</label>
+                <ValidationMessage For="() => Input.Pars" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputNumber @bind-Value="Input.Bogeys" class="form-control" placeholder="Please enter your bogeys." disabled />
+                <label for="bogeys" class="form-label">Bogeys</label>
+                <ValidationMessage For="() => Input.Bogeys" class="text-danger" />
             </div>
             <button type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
         </EditForm>
@@ -50,6 +98,23 @@
         username = await UserManager.GetUserNameAsync(user);
         phoneNumber = await UserManager.GetPhoneNumberAsync(user);
 
+        var player = await _context.Players
+            .Include(p => p.Stats)
+            .FirstOrDefaultAsync(p => p.IdentityUserId == user.Id);
+
+        if (player != null)
+        {
+            Input.FirstName = player.FirstName;
+            Input.LastName = player.LastName;
+            Input.ProfilePictureUrl = player.ProfilePictureUrl;
+            Input.IsActive = player.IsActive;
+            Input.Aces = player.Stats.Aces;
+            Input.Eagles = player.Stats.Eagles;
+            Input.Birdies = player.Stats.Birdies;
+            Input.Pars = player.Stats.Pars;
+            Input.Bogeys = player.Stats.Bogeys;
+        }
+
         Input.PhoneNumber ??= phoneNumber;
     }
 
@@ -61,17 +126,92 @@
             if (!setPhoneResult.Succeeded)
             {
                 RedirectManager.RedirectToCurrentPageWithStatus("Error: Failed to set phone number.", HttpContext);
+                return;
             }
         }
+
+        var player = await _context.Players
+            .Include(p => p.Stats)
+            .FirstOrDefaultAsync(p => p.IdentityUserId == user.Id);
+
+        if (player == null)
+        {
+            // Create a new player if it doesn't exist
+            player = new Player()
+                {
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    Username = user.UserName,
+                    Email = user.Email,
+                    IdentityUser = user,
+                    IdentityUserId = user.Id,
+                    ProfilePictureUrl = Input.ProfilePictureUrl ?? "www.noimage.com/noimage",
+                    IsActive = Input.IsActive,
+                    Stats = new PlayerStats
+                    {
+                        Aces = Input.Aces,
+                        Eagles = Input.Eagles,
+                        Birdies = Input.Birdies,
+                        Pars = Input.Pars,
+                        Bogeys = Input.Bogeys
+                    }
+                };
+            _context.Players.Add(player);
+        }
+        else
+        {
+            // Update existing player
+            player.ProfilePictureUrl = Input.ProfilePictureUrl ?? "www.noimage.com/noimage";
+            player.IsActive = Input.IsActive;
+            player.Stats.Aces = Input.Aces;
+            player.Stats.Eagles = Input.Eagles;
+            player.Stats.Birdies = Input.Birdies;
+            player.Stats.Pars = Input.Pars;
+            player.Stats.Bogeys = Input.Bogeys;
+
+            _context.Players.Update(player); // Ensure the player object is being tracked
+        }
+
+        await _context.SaveChangesAsync();
 
         await SignInManager.RefreshSignInAsync(user);
         RedirectManager.RedirectToCurrentPageWithStatus("Your profile has been updated", HttpContext);
     }
+
+
 
     private sealed class InputModel
     {
         [Phone]
         [Display(Name = "Phone number")]
         public string? PhoneNumber { get; set; }
+
+        [Display(Name = "Firstname")]
+        public string? FirstName { get; set; }
+
+        [Display(Name = "Lastname")]
+        public string? LastName { get; set; }
+
+        [Display(Name = "Profile Picture URL")]
+        public string? ProfilePictureUrl { get; set; }
+
+        [Display(Name = "Is Active")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Aces")]
+        public int Aces { get; set; }
+
+        [Display(Name = "Eagles")]
+        public int Eagles { get; set; }
+
+        [Display(Name = "Birdies")]
+        public int Birdies { get; set; }
+
+        [Display(Name = "Pars")]
+        public int Pars { get; set; }
+
+        [Display(Name = "Bogeys")]
+        public int Bogeys { get; set; }
     }
 }

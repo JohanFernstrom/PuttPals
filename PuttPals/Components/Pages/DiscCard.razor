@@ -1,0 +1,21 @@
+﻿
+<div class="col">
+    <div class="card rounded-3 employee-card">
+        <div class="card-header py-3">
+            <h3>@Disc.Name</h3>
+            <span>Plastic: @Disc.Plastic Weight: @Disc.Weight</span>
+        </div>
+        <div class="card-body employee-card text-center">
+            <img src="@(Disc.ImageUrl)"
+                 class="employee-img rounded-circle img-fluid" />
+        </div>
+        @{
+            string identifier = $"{Disc.Name}-{Disc.Plastic}";
+        }
+        <a href="@($"/discdetail/{Disc.Id}")" class="btn btn-outline-primary btn-sm mb-1">Full Details</a>
+    </div>
+</div>
+
+@code {
+
+}

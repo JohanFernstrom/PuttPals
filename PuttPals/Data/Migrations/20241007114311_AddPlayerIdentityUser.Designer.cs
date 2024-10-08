@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PuttPals.Data;
 
@@ -11,9 +12,11 @@ using PuttPals.Data;
 namespace PuttPals.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241007114311_AddPlayerIdentityUser")]
+    partial class AddPlayerIdentityUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,6 +274,9 @@ namespace PuttPals.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Speed")
                         .HasColumnType("int");
 
@@ -288,7 +294,9 @@ namespace PuttPals.Migrations
 
                     b.HasIndex("BagId");
 
-                    b.ToTable("Discs");
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("Disc");
                 });
 
             modelBuilder.Entity("PuttPals.Data.Models.Player", b =>
@@ -338,24 +346,6 @@ namespace PuttPals.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("Players");
-                });
-
-            modelBuilder.Entity("PuttPals.Data.Models.PlayerDisc", b =>
-                {
-                    b.Property<int>("PlayerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DiscId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.HasKey("PlayerId", "DiscId");
-
-                    b.HasIndex("DiscId");
-
-                    b.ToTable("PlayerDiscs");
                 });
 
             modelBuilder.Entity("PuttPals.Data.Models.PlayerStats", b =>
@@ -459,6 +449,14 @@ namespace PuttPals.Migrations
                     b.HasOne("PuttPals.Data.Models.Bag", null)
                         .WithMany("Discs")
                         .HasForeignKey("BagId");
+
+                    b.HasOne("PuttPals.Data.Models.Player", "Player")
+                        .WithMany("Discs")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("PuttPals.Data.Models.Player", b =>
@@ -470,25 +468,6 @@ namespace PuttPals.Migrations
                         .IsRequired();
 
                     b.Navigation("IdentityUser");
-                });
-
-            modelBuilder.Entity("PuttPals.Data.Models.PlayerDisc", b =>
-                {
-                    b.HasOne("PuttPals.Data.Models.Disc", "Disc")
-                        .WithMany("PlayerDiscs")
-                        .HasForeignKey("DiscId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PuttPals.Data.Models.Player", "Player")
-                        .WithMany("PlayerDiscs")
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Disc");
-
-                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("PuttPals.Data.Models.PlayerStats", b =>
@@ -507,16 +486,11 @@ namespace PuttPals.Migrations
                     b.Navigation("Discs");
                 });
 
-            modelBuilder.Entity("PuttPals.Data.Models.Disc", b =>
-                {
-                    b.Navigation("PlayerDiscs");
-                });
-
             modelBuilder.Entity("PuttPals.Data.Models.Player", b =>
                 {
                     b.Navigation("Bags");
 
-                    b.Navigation("PlayerDiscs");
+                    b.Navigation("Discs");
 
                     b.Navigation("Stats")
                         .IsRequired();

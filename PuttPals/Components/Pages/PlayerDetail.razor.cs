@@ -7,13 +7,28 @@ namespace PuttPals.Components.Pages
     public partial class PlayerDetail : ComponentBase
     {
         [Parameter]
-        public string UserName { get; set; }
+        public required string UserName { get; set; }
 
-        public Player Player { get; set; } = new Player();
+        public Player Player { get; set; }
 
         protected override void OnInitialized()
         {
-            Player = MockPuttPalsDataService.Players.Single(e => e.Username == UserName);
+            var players = MockPuttPalsDataService.Players;
+
+            if(players != null && !players.Any())
+            {
+                Player = players.Single(e => e.Username == UserName);
+            }
+            else
+            {
+                Player = new Player
+                {
+                    Username = "MISSINGNO",
+                    ProfilePictureUrl = "WUTDAFUCK",
+                    IdentityUserId = "MISSINGUSERID",
+                    IdentityUser = new Data.ApplicationUser()
+                };
+            }
         }
     }
 }

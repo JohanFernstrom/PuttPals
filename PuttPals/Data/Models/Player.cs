@@ -1,25 +1,36 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Collections.Generic;
 
 namespace PuttPals.Data.Models
 {
     public class Player : Person
     {
-        public string Username { get; set; }
-        public string ProfilePictureUrl { get; set; }
-        public bool IsActive { get; set; }
+        public int Id { get; set; } //PK
+        public required string Username { get; set; }
+        public required string ProfilePictureUrl { get; set; }
+        public bool IsActive { get; set; } = true;
         public DateTime DateJoined { get; set; }
-        public List<Disc> Discs { get; set; } = new List<Disc>();
+        public List<PlayerDisc> PlayerDiscs { get; set; } = new List<PlayerDisc>();
         public List<Bag> Bags { get; set; } = new List<Bag>();
         public PlayerStats Stats { get; set; } = new PlayerStats();
 
+        //FK for IdentityUser
+        public required string IdentityUserId { get; set; }
+        public required ApplicationUser IdentityUser { get; set; }
+
         public void AddDisc(Disc disc)
         {
-            Discs.Add(disc);
+            PlayerDiscs.Add(new PlayerDisc { PlayerId = this.Id, DiscId = disc.Id, Player = this, Disc = disc });
         }
 
         public void RemoveDisc(Disc disc)
         {
-            Discs.Remove(disc);
+            var playerDisc = PlayerDiscs.Find(pd => pd.DiscId == disc.Id);
+            if (playerDisc != null)
+            {
+                PlayerDiscs.Remove(playerDisc);
+            }
         }
 
         public void AddBag(Bag bag)

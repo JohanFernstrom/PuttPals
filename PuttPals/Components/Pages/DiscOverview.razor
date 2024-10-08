@@ -1,0 +1,154 @@
+﻿@page "/discoverview"
+@attribute [StreamRendering(true)]
+@rendermode InteractiveServer
+
+<h3>Disc Overview</h3>
+
+<button class="btn btn-primary mb-3" @onclick="OpenAddDiscModal">Add Disc</button>
+
+@if (Discs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @if (Discs.Any())
+    {
+        var groupedDiscs = Discs.GroupBy(d => d.Name)
+                                .Select(g => new { Name = g.Key, Count = g.Sum(d => d.PlayerDiscs.First().Count), Discs = g.ToList() })
+                                .ToList();
+
+        <div class="row">
+            @foreach (var group in groupedDiscs)
+            {
+                <div class="col-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <DiscCard Disc="group.Discs.First()"></DiscCard>
+                    <p>@group.Name X @group.Count</p>
+                    <button class="btn btn-success" @onclick="() => IncrementDiscCount(group.Discs.First().Id)">+</button>
+                    <button class="btn btn-warning" @onclick="() => DecrementDiscCount(group.Discs.First().Id)">-</button>
+                    <button class="btn btn-danger" @onclick="() => RemoveDisc(group.Discs.First().Id)">X</button>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p><em>No discs found</em></p>
+    }
+
+    <!-- Add Disc Modal -->
+    <div class="modal fade" id="addDiscModal" tabindex="-1" aria-labelledby="addDiscModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDiscModalLabel">Add Disc</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="newDisc" OnValidSubmit="AddDiscAsync">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        @if (!showForm)
+                        {
+                            <div class="mb-3">
+                                <label for="existingDisc" class="form-label">Select Existing Disc</label>
+                                <InputSelect id="existingDisc" class="form-control" @bind-Value="selectedDiscId">
+                                    <option value="">-- Select a Disc --</option>
+                                    @foreach (var disc in allDiscs)
+                                    {
+                                        <option value="@disc.Id">@disc.Name</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <button type="button" class="btn btn-primary" @onclick="AddSelectedDisc">Add Selected Disc</button>
+                            <button type="button" class="btn btn-secondary" @onclick="ShowForm">Add New Disc</button>
+                        }
+                        else
+                        {
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Name</label>
+                                <InputText id="name" class="form-control" @bind-Value="newDisc.Name" />
+                                <ValidationMessage For="@(() => newDisc.Name)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="type" class="form-label">Type</label>
+                                <InputText id="type" class="form-control" @bind-Value="newDisc.Type" />
+                                <ValidationMessage For="@(() => newDisc.Type)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="weight" class="form-label">Weight (grams)</label>
+                                <InputNumber id="weight" class="form-control" @bind-Value="newDisc.Weight" />
+                                <ValidationMessage For="@(() => newDisc.Weight)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="plastic" class="form-label">Plastic</label>
+                                <InputText id="plastic" class="form-control" @bind-Value="newDisc.Plastic" />
+                                <ValidationMessage For="@(() => newDisc.Plastic)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imageUrl" class="form-label">Image URL</label>
+                                <InputText id="imageUrl" class="form-control" @bind-Value="newDisc.ImageUrl" />
+                                <ValidationMessage For="@(() => newDisc.ImageUrl)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="speed" class="form-label">Speed</label>
+                                <InputNumber id="speed" class="form-control" @bind-Value="newDisc.Speed" />
+                                <ValidationMessage For="@(() => newDisc.Speed)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="glide" class="form-label">Glide</label>
+                                <InputNumber id="glide" class="form-control" @bind-Value="newDisc.Glide" />
+                                <ValidationMessage For="@(() => newDisc.Glide)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="turn" class="form-label">Turn</label>
+                                <InputNumber id="turn" class="form-control" @bind-Value="newDisc.Turn" />
+                                <ValidationMessage For="@(() => newDisc.Turn)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fade" class="form-label">Fade</label>
+                                <InputNumber id="fade" class="form-control" @bind-Value="newDisc.Fade" />
+                                <ValidationMessage For="@(() => newDisc.Fade)" />
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Disc</button>
+                        }
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script async>
+    window.bootstrapInterop = {
+        showModal: function (modalId) {
+            var modalElement = document.querySelector(modalId);
+            if (modalElement) {
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            } else {
+                console.error(`Modal with id ${modalId} not found.`);
+            }
+        },
+        hideModal: function (modalId) {
+            var modalElement = document.querySelector(modalId);
+            if (modalElement) {
+                var modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) {
+                    modal.hide();
+                }
+            } else {
+                console.error(`Modal with id ${modalId} not found.`);
+            }
+        }
+    };
+</script>
