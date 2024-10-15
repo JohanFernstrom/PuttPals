@@ -139,11 +139,11 @@
             // Create a new player if it doesn't exist
             player = new Player()
                 {
-                    FirstName = Input.FirstName,
-                    LastName = Input.LastName,
-                    PhoneNumber = user.PhoneNumber,
-                    Username = user.UserName,
-                    Email = user.Email,
+                    FirstName = Input.FirstName ?? string.Empty,
+                    LastName = Input.LastName ?? string.Empty,
+                    PhoneNumber = user.PhoneNumber ?? string.Empty,
+                    Username = user.UserName ?? string.Empty,
+                    Email = user.Email ?? string.Empty,
                     IdentityUser = user,
                     IdentityUserId = user.Id,
                     ProfilePictureUrl = Input.ProfilePictureUrl ?? "www.noimage.com/noimage",

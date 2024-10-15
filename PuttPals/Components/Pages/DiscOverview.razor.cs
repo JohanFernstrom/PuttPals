@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop;
 using PuttPals.Data;
 using PuttPals.Data.Models;
-using System.Text.Json;
 
 namespace PuttPals.Components.Pages
 {
@@ -29,15 +30,107 @@ namespace PuttPals.Components.Pages
         [Inject]
         private IJSRuntime JSRuntime { get; set; } = default!;
 
+        [Inject]
+        private NavigationManager NavigationManager { get; set; } = default!;
+
+        private HubConnection? hubConnection;
+        private int? discId;
+        private int? discCount;
+
         protected override async Task OnInitializedAsync()
         {
             await LoadDiscsAsync();
+
+            hubConnection = new HubConnectionBuilder()
+                .WithUrl(NavigationManager.ToAbsoluteUri("/dischub"))
+                .Build();
+
+            hubConnection.On<int, int>("UpdateDiscCount", async (discId, discCount) =>
+            {
+                var foundDisc = Discs.FirstOrDefault(s => s.Id == discId);
+
+                if (foundDisc != null)
+                {
+                    var foundPlayerDisc = foundDisc.PlayerDiscs.FirstOrDefault(s => s.DiscId == discId);
+
+                    if (foundPlayerDisc != null && discCount > 0)
+                    {
+                        foundPlayerDisc.Count = discCount;
+                        await InvokeAsync(StateHasChanged);
+                    }
+                }
+            });
+
+            hubConnection.On<int>("AddListOfDiscsToPlayer", async (discId) =>
+            {
+                var existingPlayerDisc = Discs.FirstOrDefault(s => s.Id == discId);
+
+                if (existingPlayerDisc != null)
+                {
+                    var foundPlayerDisc = existingPlayerDisc.PlayerDiscs.FirstOrDefault(s => s.DiscId == discId);
+
+                    if (foundPlayerDisc != null)
+                    {
+                        foundPlayerDisc.Count++;
+                    }
+                }
+                else
+                {
+                    var newPlayerDisc = allDiscs.FirstOrDefault(x => x.Id == discId);
+
+                    if (newPlayerDisc != null)
+                    {
+                        Discs.Add(newPlayerDisc);
+                        var newAddedDisc = Discs.FirstOrDefault(s => s.Id == discId);
+                        var player = await GetPlayer();
+                        newAddedDisc?.PlayerDiscs.Add(new PlayerDisc() { Count = 1, Disc = newDisc, DiscId = discId, Player = player, PlayerId = player.Id });
+                    }
+                }
+
+                await InvokeAsync(StateHasChanged);
+            });
+
+            hubConnection.On<int>("RemoveDiscFromPlayer", async (discId) =>
+            {
+                var foundDisc = Discs.FirstOrDefault(s => s.Id == discId);
+
+                if (foundDisc != null)
+                {
+                    var foundPlayerDisc = foundDisc.PlayerDiscs.FirstOrDefault(s => s.DiscId == discId);
+                    if (foundPlayerDisc != null)
+                    {
+                        foundDisc.PlayerDiscs.Remove(foundPlayerDisc);
+                        if (!foundDisc.PlayerDiscs.Any())
+                        {
+                            Discs.Remove(foundDisc);
+                        }
+                    }
+                }
+
+                Discs = new List<Disc>(Discs);
+                await InvokeAsync(StateHasChanged);
+            });
+
+            await hubConnection.StartAsync();
         }
 
         private async Task LoadDiscsAsync()
         {
+            var player = await GetPlayer();
+
+            if (player != null)
+            {
+                Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
+            }
+
+            allDiscs = await _context.Discs.ToListAsync();
+        }
+
+        private async Task<Player> GetPlayer()
+        {
             var authState = await authenticationStateTask;
             var user = await UserManager.GetUserAsync(authState.User);
+
             if (user != null)
             {
                 var player = await _context.Players
@@ -45,13 +138,10 @@ namespace PuttPals.Components.Pages
                         .ThenInclude(pd => pd.Disc)
                     .FirstOrDefaultAsync(p => p.IdentityUserId == user.Id);
 
-                if (player != null)
-                {
-                    Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
-                }
-
-                allDiscs = await _context.Discs.ToListAsync();
+                return player;
             }
+
+            return null;
         }
 
         private async void OpenAddDiscModal()
@@ -69,12 +159,7 @@ namespace PuttPals.Components.Pages
 
         private async Task AddSelectedDisc()
         {
-            var authState = await authenticationStateTask;
-            var user = await UserManager.GetUserAsync(authState.User);
-
-            var player = await _context.Players
-                .Include(p => p.PlayerDiscs)
-                .FirstOrDefaultAsync(p => p.IdentityUserId == user.Id);
+            var player = await GetPlayer();
 
             if (player != null && selectedDiscId.HasValue)
             {
@@ -84,8 +169,6 @@ namespace PuttPals.Components.Pages
                     var playerDisc = player.PlayerDiscs.FirstOrDefault(pd => pd.DiscId == existingDisc.Id);
                     if (playerDisc != null)
                     {
-                        // Disc already exists for the player, update the count or handle it as needed
-                        playerDisc.Count++;
                         _context.PlayerDiscs.Update(playerDisc);
                     }
                     else
@@ -96,6 +179,10 @@ namespace PuttPals.Components.Pages
 
                     await _context.SaveChangesAsync();
                     Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
+
+
+                    //DETTA SKA SYNKA KLIENTER
+                    await hubConnection.SendAsync("AddDiscsToPlayer", existingDisc.Id);
                 }
             }
 
@@ -122,6 +209,9 @@ namespace PuttPals.Components.Pages
                 await _context.SaveChangesAsync();
                 Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
                 newDisc = new Disc(); // Reset the form
+
+                await hubConnection.SendAsync("UpdateDiscsCount", discId, player.PlayerDiscs.Count);
+                StateHasChanged();
             }
 
             await JSRuntime.InvokeVoidAsync("bootstrapInterop.hideModal", "#addDiscModal");
@@ -145,6 +235,9 @@ namespace PuttPals.Components.Pages
                     _context.PlayerDiscs.Update(playerDisc);
                     await _context.SaveChangesAsync();
                     Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
+
+                    await hubConnection.SendAsync("UpdateDiscsCount", discId, playerDisc.Count);
+                    StateHasChanged();
                 }
             }
         }
@@ -174,6 +267,9 @@ namespace PuttPals.Components.Pages
                     }
                     await _context.SaveChangesAsync();
                     Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
+
+                    await hubConnection.SendAsync("UpdateDiscsCount", discId, playerDisc.Count);
+                    StateHasChanged();
                 }
             }
         }
@@ -195,6 +291,9 @@ namespace PuttPals.Components.Pages
                     _context.PlayerDiscs.Remove(playerDisc);
                     await _context.SaveChangesAsync();
                     Discs = player.PlayerDiscs.Select(pd => pd.Disc).ToList();
+
+                    await hubConnection.SendAsync("RemoveDiscsFromPlayer", discId);
+                    StateHasChanged();
                 }
             }
         }
