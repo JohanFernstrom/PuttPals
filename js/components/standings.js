@@ -84,6 +84,14 @@ function buildStallning(dataArray) {
   
   // Create header row
   const trHeader = document.createElement('tr');
+  
+  // Add rank header
+  const thRank = document.createElement('th');
+  thRank.textContent = "Plats";
+  thRank.style.width = "60px";
+  trHeader.appendChild(thRank);
+  
+  // Add name header
   const thName = document.createElement('th');
   thName.textContent = "Namn";
   trHeader.appendChild(thName);
@@ -106,25 +114,62 @@ function buildStallning(dataArray) {
   rows.sort((a, b) => b.total - a.total);
   
   // Create a row for each player
-  rows.forEach(row => {
+  rows.forEach((row, index) => {
     const tr = document.createElement('tr');
+    
+    // Add position/rank
+    const tdRank = document.createElement('td');
+    
+    // Apply special styling for top 3 positions
+    if (index < 3) {
+      tdRank.innerHTML = `<span class="position-${index + 1}">${index + 1}</span>`;
+      // Add trophy icons
+      if (index === 0) {
+        tdRank.innerHTML = `<i class="fas fa-trophy position-1" title="1:a plats"></i>`;
+      } else if (index === 1) {
+        tdRank.innerHTML = `<i class="fas fa-trophy position-2" title="2:a plats"></i>`;
+      } else if (index === 2) {
+        tdRank.innerHTML = `<i class="fas fa-trophy position-3" title="3:e plats"></i>`;
+      }
+    } else {
+      tdRank.textContent = index + 1;
+    }
+    tr.appendChild(tdRank);
     
     // Add player name
     const tdName = document.createElement('td');
     tdName.textContent = row.person;
+    // Bold the name for top 3
+    if (index < 3) {
+      tdName.style.fontWeight = "600";
+    }
     tr.appendChild(tdName);
     
     // Add points per course
     courses.forEach(course => {
       const td = document.createElement('td');
       let pts = coursePoints[course][row.person] || 0;
-      td.innerHTML = pts > 0 ? "<b>" + pts + "</b>" : '<b>-</b>';
+      if (pts > 0) {
+        td.innerHTML = `<b>${pts}</b>`;
+      } else {
+        td.innerHTML = '<span style="color: var(--border);">-</span>';
+      }
       tr.appendChild(td);
     });
     
     // Add total points
     const tdTotal = document.createElement('td');
-    tdTotal.innerHTML = "<b>" + row.total + "</b>";
+    tdTotal.innerHTML = `<b>${row.total}</b>`;
+    
+    // Highlight top 3 totals
+    if (index === 0) {
+      tdTotal.className = 'position-1';
+    } else if (index === 1) {
+      tdTotal.className = 'position-2';
+    } else if (index === 2) {
+      tdTotal.className = 'position-3';
+    }
+    
     tr.appendChild(tdTotal);
     
     table.appendChild(tr);

@@ -1,6 +1,6 @@
 {
   "name": "puttPals",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "ToggleBoys Ligan 2025 - A discgolf league tracking system",
   "main": "index.html",
   "scripts": {
@@ -11,11 +11,15 @@
   "keywords": [
     "discgolf",
     "league",
-    "tracking"
+    "tracking",
+    "responsive"
   ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.29.3"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
   }
 } 

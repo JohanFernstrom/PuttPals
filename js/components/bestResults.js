@@ -139,12 +139,33 @@ function buildSummary(dataArray) {
       const entries = summary[person][course];
       
       if (entries && entries.length > 0) {
-        td.innerHTML = entries.map(e => 
-          e.date + " - " + "<b>" + e.score + "</b>" + 
-          (e.pts ? " (" + e.pts + "p)" : "")
-        ).join("<br>");
+        const resultElements = entries.map(e => {
+          // Format date
+          const dateStr = e.date;
+          
+          // Format score with points
+          let scoreStr = `<b>${e.score}</b>`;
+          
+          // Format points with appropriate styling
+          let ptsStr = '';
+          if (e.pts) {
+            // Style points based on position
+            if (e.pts === 3) {
+              ptsStr = ` <span class="position-1">(${e.pts}p)</span>`;
+            } else if (e.pts === 2) {
+              ptsStr = ` <span class="position-2">(${e.pts}p)</span>`;
+            } else if (e.pts === 1) {
+              ptsStr = ` <span class="position-3">(${e.pts}p)</span>`;
+            } else {
+              ptsStr = ` (${e.pts}p)`;
+            }
+          }
+          
+          return `${dateStr} - ${scoreStr}${ptsStr}`;
+        });
+        td.innerHTML = resultElements.join("<br>");
       } else {
-        td.innerHTML = '<b>-</b>';
+        td.innerHTML = '<span style="color: var(--border);">-</span>';
       }
       
       tr.appendChild(td);

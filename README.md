@@ -8,9 +8,11 @@ A disc golf league tracking application for the ToggleBoys Ligan 2025. This web 
 - 🏆 Calculate points based on player performance
 - 📈 Display standings, best results, and round statistics
 - 📱 Responsive design for mobile and desktop
-- 🌙 Dark mode UI for better visibility
-- ⚡ Hot reloading for development
-- 🔄 Real-time data from Google Sheets
+- 🌓 Toggle between dark and light themes
+- 🎨 Modern UI with animations and transitions
+- 💯 Position highlighting and ranking visualization
+- 📱 Fully responsive design for all device sizes
+- ⚡ Real-time data from Google Sheets
 
 ## Getting Started
 
@@ -53,10 +55,26 @@ PuttPals/
 └── .gitignore            # Git ignore file
 ```
 
+## Design Features
+
+- **Modern UI**: Sleek, responsive interface with smooth transitions and animations
+- **Dark/Light Mode**: Toggle between dark and light themes based on preference
+- **Responsive Tables**: Optimized table display for all screen sizes
+- **Position Highlighting**: Visual indicators for top rankings
+- **Loading Animation**: Improved user feedback during data loading
+- **CSS Variables**: Easily customize the color scheme and spacing
+
+## Dependencies
+
+- [SheetJS](https://github.com/SheetJS/sheetjs) - Excel file parsing
+- [Google Fonts](https://fonts.google.com/) - Montserrat and Open Sans fonts
+- [Font Awesome](https://fontawesome.com/) - Icons for improved UI
+
 ## Documentation
 
 For more detailed information, please check the [docs](./docs) directory:
 
+- [Installation Guide](./docs/INSTALLATION.md)
 - [Product Requirements Document](./docs/PRD.md)
 - [Rules](./docs/Rules.md)
 - [Technical Documentation](./docs/TechnicalDocumentation.md)

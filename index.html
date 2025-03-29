@@ -6,38 +6,67 @@
     <title>ToggleBoys Ligan 2025</title>
     <!-- Meta viewport for responsive design -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <!-- External CSS -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
+    <!-- Header -->
     <div class="header-container">
-        <h2>ToggleBoys Ligan 2025</h2>
+        <div class="app-logo">
+            <i class="fas fa-bullseye fa-2x" style="color: var(--primary);"></i>
+            <h2 class="app-title">ToggleBoys Ligan 2025</h2>
+        </div>
         <div class="buttons">
-            <a class="btn"
-                href="https://docs.google.com/spreadsheets/d/1bw6pXc641nv13V9ECxuwjTPzJq1z3ubpMsTQSVQewVs/edit?usp=sharing"
-                target="_blank">Manuell Inmatning</a>
-            <a class="btn" href="https://forms.gle/MShZKyWr9vmKfCz68" target="_blank">Registrera ny runda</a>
+            <a class="btn" href="https://docs.google.com/spreadsheets/d/1bw6pXc641nv13V9ECxuwjTPzJq1z3ubpMsTQSVQewVs/edit?usp=sharing" target="_blank">
+                <i class="fas fa-table fa-fw"></i> Manuell Inmatning
+            </a>
+            <a class="btn secondary" href="https://forms.gle/MShZKyWr9vmKfCz68" target="_blank">
+                <i class="fas fa-plus-circle fa-fw"></i> Registrera ny runda
+            </a>
         </div>
     </div>
 
-    <div id="message"></div>
+    <!-- Main content container -->
+    <div class="container">
+        <!-- Loading message -->
+        <div id="message"></div>
 
-    <!-- Ställning Table -->
-    <h3>Ställning</h3>
-    <div id="stallningContainer"></div>
+        <!-- Standings Table -->
+        <div class="section-header">
+            <h3><i class="fas fa-trophy fa-fw"></i> Ställning</h3>
+        </div>
+        <div id="stallningContainer" class="table-container"></div>
 
-    <!-- Summary Table -->
-    <h3>Bästa resultat per bana</h3>
-    <div id="summaryContainer"></div>
+        <!-- Summary Table -->
+        <div class="section-header">
+            <h3><i class="fas fa-medal fa-fw"></i> Bästa resultat per bana</h3>
+        </div>
+        <div id="summaryContainer" class="table-container"></div>
 
-    <!-- Detailed Table -->
-    <h3>Alla tidigare rundor</h3>
-    <div id="tableContainer"></div>
+        <!-- Detailed Table -->
+        <div class="section-header">
+            <h3><i class="fas fa-history fa-fw"></i> Alla tidigare rundor</h3>
+        </div>
+        <div id="tableContainer" class="table-container"></div>
 
-    <!-- Count Table -->
-    <h3>Antal rundor</h3>
-    <div id="countContainer"></div>
+        <!-- Count Table -->
+        <div class="section-header">
+            <h3><i class="fas fa-chart-bar fa-fw"></i> Antal rundor</h3>
+        </div>
+        <div id="countContainer" class="table-container"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 0.9rem; color: var(--on-background); background-color: var(--surface);">
+        <p>© 2025 ToggleBoys Ligan | PuttPals</p>
+    </footer>
 
     <!-- Include SheetJS library from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
