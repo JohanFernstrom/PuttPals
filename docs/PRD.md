@@ -33,6 +33,24 @@ ToggleBoys Ligan is a discgolf league tracking system that allows players to rec
    - Counts total rounds played by each player
    - Breaks down counts by course
 
+### User Interface Features
+1. **Rules Modal**
+   - Accessible via "Regler" button in the header
+   - Displays league rules and point calculations
+   - Provides quick reference for scoring system and player eligibility
+   - Responsive design adapts to all screen sizes
+
+2. **Patch Notes Modal**
+   - Accessible via "Versionshistorik" link in the footer
+   - Displays complete version history in Swedish
+   - Shows features, improvements, and bug fixes from all versions
+   - Organized by version number and date
+   - Allows users to track application evolution over time
+
+3. **Theme Toggle**
+   - Allows switching between light and dark themes
+   - Preference is saved for future visits
+
 ### Technical Requirements
 - Responsive design that works on both desktop and mobile devices
 - Dark mode UI for better visibility

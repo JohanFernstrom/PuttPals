@@ -25,6 +25,7 @@ This directory contains the following documentation files:
 - Track scores across multiple discgolf courses
 - Calculate points based on player performance
 - Display standings, best results, comprehensive history, and round counts
+- Quick access to league rules via modal dialog
 - Responsive design that works on mobile and desktop
 - Dark mode UI for better visibility
 - Real-time data from Google Sheets
@@ -34,8 +35,10 @@ This directory contains the following documentation files:
 To use the application:
 
 1. Visit the [Live Application](../index.html)
-2. To register a new round, click "Registrera ny runda"
-3. To view or edit the raw data, click "Manuell Inmatning"
+2. To view league rules, click the "Regler" button in the header
+3. To register a new round, click "Registrera ny runda"
+4. To view or edit the raw data, click "Manuell Inmatning"
+5. To view version history, click "Versionshistorik" in the footer
 
 ## Contact
 

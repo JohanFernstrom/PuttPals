@@ -72,6 +72,88 @@ Four main tables are generated dynamically:
 4. **Antal rundor (Number of rounds)** - `buildCountTable()`
    - Shows count of rounds played by each player at each course
 
+### UI Components
+
+#### Modal System
+
+The application includes a generic modal system that supports multiple modals:
+
+```javascript
+function initModal() {
+  // Initialize rules modal
+  initModalHandlers('rulesModal', 'rulesBtn');
+  
+  // Initialize patch notes modal
+  initModalHandlers('patchNotesModal', 'patchNotesBtn');
+}
+
+function initModalHandlers(modalId, btnId) {
+  const modal = document.getElementById(modalId);
+  const btn = document.getElementById(btnId);
+  const closeBtn = modal.querySelector('.close-button');
+  
+  // Open modal when the button is clicked
+  btn.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  });
+  
+  // Additional handlers for closing the modal...
+}
+```
+
+The application currently has two modal instances:
+
+1. **Rules Modal** - Accessible from the header, shows league rules
+2. **Patch Notes Modal** - Accessible from the footer, shows version history in Swedish
+
+Each modal shares the same CSS styling and interaction behavior, creating a consistent user experience.
+
+The modals are styled using CSS with transitions for smooth animations:
+
+```css
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal.active {
+  opacity: 1;
+  display: block;
+}
+
+.modal-content {
+  background-color: var(--surface);
+  margin: 5% auto;
+  padding: 24px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.modal.active .modal-content {
+  transform: translateY(0);
+}
+```
+
+#### Theme Toggle
+
+// ... existing code ...
+
 ## Google Integration
 
 ### Data Source

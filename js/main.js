@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initialize app components
   initApp();
   initThemeToggle();
+  initModal();
 });
 
 /**
@@ -79,6 +80,57 @@ function initThemeToggle() {
   
   themeButton.addEventListener('click', toggleTheme);
   headerButtons.appendChild(themeButton);
+}
+
+/**
+ * Initialize modal functionality
+ */
+function initModal() {
+  // Initialize rules modal
+  initModalHandlers('rulesModal', 'rulesBtn');
+  
+  // Initialize patch notes modal
+  initModalHandlers('patchNotesModal', 'patchNotesBtn');
+}
+
+/**
+ * Initialize modal handlers for a specific modal
+ * @param {string} modalId - The ID of the modal element
+ * @param {string} btnId - The ID of the button that opens the modal
+ */
+function initModalHandlers(modalId, btnId) {
+  const modal = document.getElementById(modalId);
+  const btn = document.getElementById(btnId);
+  const closeBtn = modal.querySelector('.close-button');
+  
+  // Open modal when the button is clicked
+  btn.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  });
+  
+  // Close modal when the close button is clicked
+  closeBtn.addEventListener('click', function() {
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Re-enable scrolling
+  });
+  
+  // Close modal when clicking outside the modal content
+  window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Re-enable scrolling
+    }
+  });
+  
+  // Close modal when Escape key is pressed
+  window.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape' && modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Re-enable scrolling
+    }
+  });
 }
 
 /**

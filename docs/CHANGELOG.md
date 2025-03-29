@@ -1,5 +1,28 @@
 # Changelog
 
+## v1.0.6 - 2025-03-29
+
+### Added Patch Notes Modal
+- Added a "Versionshistorik" link in the footer for quick access to version history
+- Implemented a modal dialog that displays the complete version history in Swedish
+- Organized patch notes by version number with detailed sections for features and improvements
+- Refactored the modal system to support multiple modals with shared code
+- Created a reusable `initModalHandlers` function to handle modal interactions
+- Added proper accessibility support including keyboard navigation and background scroll locking
+- Updated documentation to include information about the patch notes feature
+
+## v1.0.5 - 2025-03-29
+
+### Added Rules Modal
+- Added a "Regler" button in the header to provide quick access to league rules
+- Implemented a modal dialog that displays the complete league rules
+- Modal includes information about basic rules, point system, season ranking, and player eligibility
+- Added smooth animations and transitions for opening/closing the modal
+- Implemented keyboard navigation support (Escape key to close)
+- Ensured the modal is fully responsive on all device sizes
+- Added focus trap and background scroll locking for improved user experience
+- Updated documentation to reflect the new feature
+
 ## v1.0.4 - 2025-03-29
 
 ### Mobile Responsiveness Improvements

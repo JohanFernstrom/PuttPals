@@ -30,6 +30,9 @@
             <a class="btn secondary" href="https://forms.gle/MShZKyWr9vmKfCz68" target="_blank">
                 <i class="fas fa-plus-circle fa-fw"></i> Registrera ny runda
             </a>
+            <button id="rulesBtn" class="btn" style="background-color: var(--accent); color: var(--on-accent);">
+                <i class="fas fa-book fa-fw"></i> Regler
+            </button>
         </div>
     </div>
 
@@ -66,7 +69,206 @@
     <!-- Footer -->
     <footer style="margin-top: 40px; padding: 20px; text-align: center; font-size: 0.9rem; color: var(--on-background); background-color: var(--surface);">
         <p>© 2025 ToggleBoys Ligan | PuttPals</p>
+        <p><a href="#" id="patchNotesBtn" style="color: var(--primary); text-decoration: none; margin-top: 5px; display: inline-block;">
+            <i class="fas fa-code-branch fa-fw"></i> Versionshistorik
+        </a></p>
     </footer>
+
+    <!-- Rules Modal -->
+    <div id="rulesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">ToggleBoys Ligan Regler</h2>
+                <button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>Grundregler</h2>
+                <ol>
+                    <li>Spelare tävlar i discgolfrundor på olika banor</li>
+                    <li>En runda är giltig när minst 3 spelare deltar</li>
+                    <li>Varje spelares poäng registreras för varje runda</li>
+                    <li>Lägre poäng är bättre (färre kast)</li>
+                    <li>Poäng beräknas baserat på prestation</li>
+                </ol>
+
+                <h2>Poängsystem</h2>
+                <h3>Hur poäng beräknas</h3>
+                <p>Poäng delas ut för varje bana baserat på en spelares tre bästa resultat på den banan:</p>
+                <ol>
+                    <li>För varje position (1:a, 2:a, 3:e bästa resultat) rankas spelarna mot varandra</li>
+                    <li>Poäng delas ut för varje position enligt följande:
+                        <ul>
+                            <li>1:a plats: 3 poäng</li>
+                            <li>2:a plats: 2 poäng</li>
+                            <li>3:e plats: 1 poäng</li>
+                            <li>4:e plats och lägre: 0 poäng</li>
+                        </ul>
+                    </li>
+                    <li>Vid oavgjort får alla berörda spelare samma poäng</li>
+                    <li>En spelare kan få maximalt 9 poäng per bana (om de har bästa resultatet i alla tre positioner)</li>
+                </ol>
+
+                <h2>Säsongsranking</h2>
+                <ol>
+                    <li>En spelares totala poäng över alla banor avgör deras ranking</li>
+                    <li>Spelaren med högst totalpoäng vinner säsongen</li>
+                    <li>Vid oavgjort i totalpoäng vinner spelaren med flest förstaplaceringar</li>
+                    <li>Om det fortfarande är oavgjort vinner spelaren med flest andraplaceringar, och så vidare</li>
+                </ol>
+
+                <h2>Spelarnas kvalifikationer</h2>
+                <ul>
+                    <li>Ligan består av de registrerade spelarna: Johan, Jimmie, Marcus, Sejaf och Andreas</li>
+                    <li>Minst 3 spelare måste delta för att en runda ska räknas till ligaställningen</li>
+                    <li>Det finns inget minimumantal rundor en spelare måste delta i för att vara kvalificerad för ranking</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Patch Notes Modal -->
+    <div id="patchNotesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Versionshistorik</h2>
+                <button class="close-button">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h2>v1.0.5 - 2025-03-29</h2>
+                <h3>Ny Regelknapp</h3>
+                <ul>
+                    <li>Lagt till en "Regler"-knapp i headern för snabb tillgång till ligans regler</li>
+                    <li>Implementerat en modal-dialog som visar de kompletta ligareglerna</li>
+                    <li>Modalen innehåller information om grundregler, poängsystem, säsongsranking och spelarnas kvalifikationer</li>
+                    <li>Lagt till mjuka animationer och övergångar för att öppna/stänga modalen</li>
+                    <li>Implementerat stöd för tangentbordsnavigering (Escape-tangenten för att stänga)</li>
+                    <li>Säkerställt att modalen är fullt responsiv på alla skärmstorlekar</li>
+                    <li>Lagt till fokushantering och låsning av bakgrundsscrollning för förbättrad användarupplevelse</li>
+                    <li>Uppdaterat dokumentationen för att återspegla den nya funktionen</li>
+                </ul>
+
+                <h2>v1.0.4 - 2025-03-29</h2>
+                <h3>Förbättringar för mobilanpassning</h3>
+                <ul>
+                    <li>Förbättrad responsiv design för bättre kompatibilitet med mobiler och små skärmar</li>
+                    <li>Lagt till nivåindelade media queries för olika enhetsstorlekar (telefoner, surfplattor, datorer)</li>
+                    <li>Optimerade tabellayout med horisontell scrollning på små skärmar</li>
+                    <li>Förbättrad layout för header och knappar på smala skärmar</li>
+                    <li>Lagt till fasta tabellhuvuden för bättre användbarhet vid scrollning</li>
+                    <li>Förbättrad textläsbarhet med lämplig storlek och avstånd</li>
+                    <li>Implementerat responsiva justeringar för mycket små skärmar (320px och mindre)</li>
+                </ul>
+
+                <h2>v1.0.3 - 2025-03-29</h2>
+                <h3>Uppstädning och optimering</h3>
+                <ul>
+                    <li>Tagit bort överflödig hot reload-implementering (hotReload.js)</li>
+                    <li>Standardiserat till browser-sync för utvecklings-hot-reloading</li>
+                    <li>Tagit bort onödiga skriptreferenser från index.html</li>
+                    <li>Effektiviserat utvecklingsarbetsflödet</li>
+                </ul>
+
+                <h2>v1.0.2 - 2025-03-29</h2>
+                <h3>Förbättringar för utveckling</h3>
+                <ul>
+                    <li>Lagt till grundläggande hot reload-funktionalitet som övervakar filändringar</li>
+                    <li>Skapat en enkel klientsidig filövervakare (hotReload.js) som kontrollerar filtidsstämplar</li>
+                    <li>Lagt till package.json för projektinformation och framtida beroendehöjning</li>
+                    <li>Förbättrat utvecklingsarbetsflödet med automatisk siduppdatering</li>
+                </ul>
+
+                <h2>v1.0.1 - 2025-03-29</h2>
+                <h3>Förbättringar av kompatibilitet</h3>
+                <ul>
+                    <li>Konverterat ES-moduler till standard JavaScript-filer för direkt webbläsarladdning utan server</li>
+                    <li>Tagit bort alla <code>import</code>/<code>export</code>-uttryck för bättre webbläsarkompatibilitet</li>
+                    <li>Uppdaterat skriptladdningsordningen i index.html för att säkerställa korrekt beroendeupplösning</li>
+                    <li>Gjort alla verktygsfunktioner globalt tillgängliga</li>
+                </ul>
+
+                <h2>v1.0.0 - 2025-03-29</h2>
+                <h3>Kodrefaktorering</h3>
+                <h4>Arkitekturändringar</h4>
+                <ul>
+                    <li>Omstrukturerat kodbasen från en enda monolitisk HTML-fil till en modulär struktur</li>
+                    <li>Skapat en tydlig separation av intressen med HTML, CSS och JavaScript i separata filer</li>
+                    <li>Implementerat ES-moduler för bättre kodorganisation och underhållbarhet</li>
+                    <li>Etablerat en tydlig filhierarki:
+                        <ul>
+                            <li><code>/css</code> - Innehåller all styling</li>
+                            <li><code>/js</code> - Innehåller all JavaScript-logik</li>
+                            <li><code>/js/components</code> - UI-komponentmoduler</li>
+                            <li><code>/js/utils</code> - Verktygsfunktioner</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>CSS-förbättringar</h4>
+                <ul>
+                    <li>Extraherat alla stilar från inline <code>&lt;style&gt;</code>-tagg till extern <code>styles.css</code>-fil</li>
+                    <li>Bibehållit all befintlig styling och responsiv design</li>
+                </ul>
+
+                <h4>JavaScript-förbättringar</h4>
+                <ul>
+                    <li>Modulariserat JavaScript-kod till logiska komponenter:
+                        <ul>
+                            <li><code>dataProcessor.js</code> - Kärnfunktioner för databehandling</li>
+                            <li><code>standings.js</code> - "Ställning"-tabellkomponent</li>
+                            <li><code>bestResults.js</code> - "Bästa resultat per bana"-tabellkomponent</li>
+                            <li><code>allRounds.js</code> - "Alla tidigare rundor"-tabellkomponent</li>
+                            <li><code>roundCount.js</code> - "Antal rundor"-tabellkomponent</li>
+                            <li><code>main.js</code> - Applikationsinitiering och koordinering</li>
+                        </ul>
+                    </li>
+                    <li>Lagt till korrekta JSDoc-kommentarer för alla funktioner</li>
+                    <li>Döpt om variabler och funktioner för att bättre återspegla deras syfte:
+                        <ul>
+                            <li>Ändrat "venue" till "course" för att anpassa till discgolf-terminologi</li>
+                            <li>Använt mer beskrivande parameter- och variabelnamn</li>
+                        </ul>
+                    </li>
+                    <li>Förbättrat felhantering genom hela applikationen</li>
+                    <li>Extraherat gemensam funktionalitet till återanvändbara hjälpfunktioner</li>
+                </ul>
+
+                <h4>HTML-förbättringar</h4>
+                <ul>
+                    <li>Förenklad HTML-struktur</li>
+                    <li>Använt externa CSS- och JavaScript-filer</li>
+                    <li>Lagt till korrekt modultyp för ES-moduler</li>
+                </ul>
+
+                <h4>Terminologiuppdateringar</h4>
+                <ul>
+                    <li>Uppdaterat alla referenser från "minigolf" till "discgolf"</li>
+                    <li>Ändrat "venue"-terminologi till "course" genom hela koden</li>
+                    <li>Ändrat "strokes"-terminologi till "throws" i dokumentationen</li>
+                </ul>
+
+                <h4>Dokumentation</h4>
+                <ul>
+                    <li>Skapat omfattande dokumentation i <code>/docs</code>-katalogen</li>
+                    <li>Underhållit och uppdaterat all befintlig dokumentation för att återspegla kodändringar</li>
+                    <li>Lagt till kommentarer genom hela kodbasen för bättre kodförståelse</li>
+                </ul>
+
+                <h4>Buggfixar</h4>
+                <ul>
+                    <li>Fixat potentiella problem med datumformatering</li>
+                    <li>Förbättrat felhantering för dataladdning</li>
+                    <li>Lagt till mer robust validering av indata</li>
+                </ul>
+
+                <h4>Prestandaförbättringar</h4>
+                <ul>
+                    <li>Optimerat databehandling genom att extrahera återanvändbara funktioner</li>
+                    <li>Reducerat kodduplicering mellan komponenter</li>
+                    <li>Förbättrad filladdning genom att organisera koden logiskt</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <!-- Include SheetJS library from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
