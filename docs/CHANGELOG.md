@@ -1,5 +1,16 @@
 # Changelog
 
+## v1.0.7 - 2025-03-29
+
+### Hero Banner och förbättringar
+- Lagt till en hero banner-sektion ovanför innehållet för bättre visuell presentation
+- Implementerat responsiv höjd för olika skärmstorlekar
+- Skapat en bildplats med överlappande text och gradient-överlappning
+- Upprättat en images-mapp med standardbild för framtida bildbyten
+- Tagit bort hover-effekter från hero banner för renare gränssnitt
+- Säkerställt att hero banner fungerar väl både i ljust och mörkt läge
+- Anpassat bannertext för olika skärmstorlekar genom media queries
+
 ## v1.0.6 - 2025-03-29
 
 ### Added Patch Notes Modal

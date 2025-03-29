@@ -22,6 +22,7 @@ This directory contains the following documentation files:
 
 ## Key Features
 
+- Visually appealing hero banner with league branding
 - Track scores across multiple discgolf courses
 - Calculate points based on player performance
 - Display standings, best results, comprehensive history, and round counts

@@ -150,6 +150,70 @@ The modals are styled using CSS with transitions for smooth animations:
 }
 ```
 
+#### Hero Banner
+
+The application features a responsive hero banner at the top of the content area:
+
+```html
+<div class="container">
+    <div class="hero-banner">
+        <img src="images/hero-placeholder.svg" alt="ToggleBoys Discgolf League">
+        <div class="hero-banner-overlay">
+            <h2 class="hero-banner-title">ToggleBoys Discgolf League 2025</h2>
+            <p class="hero-banner-subtitle">Tracking scores and standings across multiple courses</p>
+        </div>
+    </div>
+</div>
+```
+
+The hero banner uses responsive sizing with a height of 40% of the viewport (40vh) and adapts to different screen sizes using media queries:
+
+```css
+.hero-banner {
+  width: 100%;
+  height: 40vh;
+  max-height: 400px;
+  background-color: var(--surface);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  position: relative;
+  box-shadow: var(--shadow-md);
+}
+
+.hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: var(--spacing-lg);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: white;
+}
+```
+
+The banner includes a text overlay with a gradient background for improved readability. For smaller screens, both the banner height and text size are reduced for optimal viewing:
+
+```css
+@media (max-width: 768px) {
+  .hero-banner {
+    height: 30vh;
+  }
+  
+  .hero-banner-title {
+    font-size: 1.5rem;
+  }
+}
+```
+
+Images for the banner are stored in the `/images` directory, making it easy to update or change the banner image in the future.
+
 #### Theme Toggle
 
 // ... existing code ...
