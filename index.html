@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ToggleBoys Ligan 2025</title>
+    <!-- Meta viewport for responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="header-container">
+        <h2>ToggleBoys Ligan 2025</h2>
+        <div class="buttons">
+            <a class="btn"
+                href="https://docs.google.com/spreadsheets/d/1bw6pXc641nv13V9ECxuwjTPzJq1z3ubpMsTQSVQewVs/edit?usp=sharing"
+                target="_blank">Manuell Inmatning</a>
+            <a class="btn" href="https://forms.gle/MShZKyWr9vmKfCz68" target="_blank">Registrera ny runda</a>
+        </div>
+    </div>
+
+    <div id="message"></div>
+
+    <!-- Ställning Table -->
+    <h3>Ställning</h3>
+    <div id="stallningContainer"></div>
+
+    <!-- Summary Table -->
+    <h3>Bästa resultat per bana</h3>
+    <div id="summaryContainer"></div>
+
+    <!-- Detailed Table -->
+    <h3>Alla tidigare rundor</h3>
+    <div id="tableContainer"></div>
+
+    <!-- Count Table -->
+    <h3>Antal rundor</h3>
+    <div id="countContainer"></div>
+
+    <!-- Include SheetJS library from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- Application scripts -->
+    <script src="js/utils/dataProcessor.js"></script>
+    <script src="js/components/standings.js"></script>
+    <script src="js/components/bestResults.js"></script>
+    <script src="js/components/allRounds.js"></script>
+    <script src="js/components/roundCount.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

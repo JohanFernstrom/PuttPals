@@ -1,0 +1,204 @@
+/* Dark mode styles with responsive adjustments */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.header-container {
+    width: 80%;
+    margin: 0 auto 20px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+h2 {
+    margin: 0;
+    margin-bottom: 5px; /* Add space when it wraps */
+    font-size: 28px;
+    color: #ffffff;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    padding-right: 10px; /* adds spacing from the right edge */
+    margin-top: 5px; /* Space when buttons wrap below title */
+}
+
+.btn {
+    background-color: #555;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap; /* Prevent button text from wrapping */
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #666;
+}
+
+h3 {
+    text-align: center;
+    color: #ffffff;
+    margin: 15px 0 10px 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+    background-color: #1e1e1e;
+    table-layout: auto; /* Allow more flexible column widths */
+    min-width: 280px; /* Minimum width for usability */
+}
+
+th,
+td {
+    border: 1px solid #444;
+    padding: 8px 12px;
+    text-align: center;
+    word-break: break-word; /* Allow words to break for better mobile viewing */
+}
+
+th {
+    background-color: #333;
+    color: #e0e0e0;
+    position: sticky; /* Keep headers visible when scrolling */
+    top: 0;
+}
+
+td {
+    color: #e0e0e0;
+}
+
+b {
+    color: #ffffff;
+}
+
+#message {
+    text-align: center;
+    margin-top: 20px;
+    color: #e0e0e0;
+}
+
+/* Large screens (default) */
+@media (min-width: 1200px) {
+    table {
+        width: 80%;
+    }
+}
+
+/* Medium screens */
+@media (max-width: 1199px) and (min-width: 769px) {
+    table {
+        width: 90%;
+    }
+    
+    th, td {
+        padding: 8px 10px;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
+    .header-container {
+        width: 95%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .buttons {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    table {
+        width: 95%;
+    }
+    
+    th, td {
+        padding: 6px 8px;
+        font-size: 14px;
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        font-size: 16px;
+    }
+    
+    h2 {
+        font-size: 24px;
+    }
+    
+    h3 {
+        font-size: 20px;
+    }
+    
+    .btn {
+        font-size: 14px;
+        padding: 8px 10px;
+        min-width: 100px;
+    }
+    
+    table {
+        width: 100%;
+        font-size: 13px;
+    }
+    
+    th, td {
+        padding: 5px 4px;
+        max-width: 70px; /* Limit cell width on small screens */
+    }
+    
+    /* Add horizontal scrolling for tables that are too wide */
+    [id$="Container"] {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    body {
+        padding: 5px;
+    }
+    
+    h2 {
+        font-size: 20px;
+    }
+    
+    .buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    th, td {
+        padding: 4px 2px;
+        font-size: 12px;
+    }
+} 
