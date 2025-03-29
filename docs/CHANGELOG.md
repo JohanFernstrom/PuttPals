@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.0.8 - 2025-03-29
+
+### Förbättrad Hero Banner
+- Uppdaterat hero banner med ny SVG-bild i mörkt tema
+- Lagt till diskgolfspecifika designelement inklusive en korg och en disk
+- Skapat en diskbana med streckad linje för att visa diskens flygbana
+- Förbättrat textläsligheten med justeringar av textstorlek och positionering
+- Lagt till subtil gradient-bakgrund för ökat djup och visuellt intresse
+
 ## v1.0.7 - 2025-03-29
 
 ### Hero Banner och förbättringar
