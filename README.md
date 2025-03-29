@@ -18,7 +18,7 @@ A disc golf league tracking application for the ToggleBoys Ligan 2025. This web 
 
 ## Live Demo
 
-Visit the [PuttPals application](https://github.com/JohanFernstrom/PuttPals) to see the application in action!
+Visit the [PuttPals application](https://puttpals.fernstrom.io) to see the application in action!
 
 ## Getting Started
 
