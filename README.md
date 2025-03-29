@@ -4,15 +4,21 @@ A disc golf league tracking application for the ToggleBoys Ligan 2025. This web 
 
 ## Features
 
+- 🏆 Professional hero banner with discgolf theme and responsive design
 - 📊 Track scores across multiple disc golf courses
 - 🏆 Calculate points based on player performance
 - 📈 Display standings, best results, and round statistics
+- 📖 Quick access to league rules via modal dialog
+- 📝 Version history tracking through "Versionshistorik" modal
 - 📱 Responsive design for mobile and desktop
 - 🌓 Toggle between dark and light themes
 - 🎨 Modern UI with animations and transitions
 - 💯 Position highlighting and ranking visualization
-- 📱 Fully responsive design for all device sizes
 - ⚡ Real-time data from Google Sheets
+
+## Live Demo
+
+Visit the [PuttPals application](https://github.com/JohanFernstrom/PuttPals) to see the application in action!
 
 ## Getting Started
 
@@ -25,7 +31,7 @@ A disc golf league tracking application for the ToggleBoys Ligan 2025. This web 
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/PuttPals.git
+   git clone https://github.com/JohanFernstrom/PuttPals.git
    cd PuttPals
    ```
 
@@ -47,6 +53,7 @@ A disc golf league tracking application for the ToggleBoys Ligan 2025. This web 
 PuttPals/
 ├── css/                  # Stylesheets
 ├── docs/                 # Documentation files
+├── images/               # Image assets including hero banner
 ├── js/                   # JavaScript files
 │   ├── components/       # UI components
 │   └── utils/            # Utility functions
@@ -54,6 +61,26 @@ PuttPals/
 ├── package.json          # Project configuration
 └── .gitignore            # Git ignore file
 ```
+
+## Key Features
+
+### Hero Banner
+- Custom SVG-based hero banner with discgolf theme
+- Responsive design adapts to different screen sizes
+- Features a discgolf basket, disc, and flight path
+- Gradient overlay for improved text readability
+
+### Interactive Modals
+- **Rules Modal**: Access comprehensive league rules directly from the header
+- **Version History Modal**: Track application updates in Swedish via footer link
+- Keyboard navigation support (Escape to close)
+- Background scroll locking for improved user experience
+
+### League Statistics
+- Standings with total points
+- Best results per course with dates and scores
+- Comprehensive history of all rounds
+- Round counts per player and course
 
 ## Design Features
 
@@ -84,6 +111,14 @@ For more detailed information, please check the [docs](./docs) directory:
 
 - [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1bw6pXc641nv13V9ECxuwjTPzJq1z3ubpMsTQSVQewVs/edit?usp=sharing) - The data source for the application
 - [Register New Round](https://forms.gle/MShZKyWr9vmKfCz68) - Submit a new round via Google Forms
+
+## Recent Updates
+
+- Added custom SVG hero banner with discgolf elements
+- Implemented rules modal accessible from header
+- Added version history modal (Versionshistorik) in footer
+- Improved responsiveness across all device sizes
+- Refactored modal system for better code organization
 
 ## Contributing
 
